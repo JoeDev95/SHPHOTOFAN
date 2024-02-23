@@ -18,7 +18,7 @@ export default async function AdminConfigurationPage() {
               <SubmitButtonWithStatus
                 icon={<BiTrash />}
               >
-                Clear Cache
+                Limpar cache
               </SubmitButtonWithStatus>
             </form>
           </div>
