@@ -3,10 +3,10 @@ import { NextResponse } from 'next/server';
 
 const REQUIRE_ENV_VARS = false;
 
-const TITLE = 'Photo Blog';
-const DESCRIPTION = 'Store photos with original camera data';
-const REPO_TEAM = 'sambecker';
-const REPO_NAME = 'exif-photo-blog';
+const TITLE = 'Foto Blog';
+const DESCRIPTION = 'Galeria de fotos com dados da câmera';
+const REPO_TEAM = 'JoeDev95';
+const REPO_NAME = 'SHPHOTOFAN';
 
 export function GET() {
   const url = new URL('https://vercel.com/new/clone');

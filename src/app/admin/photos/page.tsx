@@ -36,11 +36,19 @@ import { getStoragePhotoUrlsNoStore } from '@/services/storage/cache';
 
 const DEBUG_PHOTO_BLOBS = false;
 
+/**
+ * Renders the admin photos page with pagination and photo management features.
+ * 
+ * @param {PaginationParams} searchParams - The pagination parameters for the photos.
+ * @returns {JSX.Element} - The rendered admin photos page.
+ */
 export default async function AdminPhotosPage({
   searchParams,
 }: PaginationParams) {
+  // Retrieve offset and limit for pagination from search parameters
   const { offset, limit } = getPaginationForSearchParams(searchParams);
 
+  // Retrieve photos, count, and blob photo URLs in parallel
   const [
     photos,
     count,
@@ -51,13 +59,17 @@ export default async function AdminPhotosPage({
     DEBUG_PHOTO_BLOBS ? getStoragePhotoUrlsNoStore() : [],
   ]);
 
+  // Determine if more photos are available
   const showMorePhotos = count > photos.length;
 
+  // Render the admin photos page with pagination, photo upload, and photo management features
   return (
     <SiteGrid
       contentMain={
         <div className="space-y-8">
+          {/* Render photo upload component with optional resizing based on PRO_MODE_ENABLED */}
           <PhotoUpload shouldResize={!PRO_MODE_ENABLED} />
+          {/* Render blob photo URLs if available */}
           {blobPhotoUrls.length > 0 &&
             <div className={clsx(
               'border-b pb-6',
@@ -69,9 +81,11 @@ export default async function AdminPhotosPage({
               />
             </div>}
           <div className="space-y-4">
+            {/* Render admin grid with individual photo details and management features */}
             <AdminGrid>
               {photos.map(photo =>
                 <Fragment key={photo.id}>
+                  {/* Render tiny photo component */}
                   <PhotoTiny photo={photo} />
                   <div className="flex flex-col lg:flex-row">
                     <Link
@@ -79,6 +93,7 @@ export default async function AdminPhotosPage({
                       href={pathForPhoto(photo)}
                       className="lg:w-[50%] flex items-center gap-2"
                     >
+                      {/* Render photo title with optional hidden icon and priority order */}
                       <span className={clsx(
                         'inline-flex items-center gap-2',
                         photo.hidden && 'text-dim',
@@ -103,6 +118,7 @@ export default async function AdminPhotosPage({
                       'lg:w-[50%] uppercase',
                       'text-dim',
                     )}>
+                      {/* Render takenAtNaive property of the photo */}
                       {photo.takenAtNaive}
                     </div>
                   </div>
@@ -110,7 +126,9 @@ export default async function AdminPhotosPage({
                     'flex flex-nowrap',
                     'gap-2 sm:gap-3 items-center',
                   )}>
+                    {/* Render edit button for photo management */}
                     <EditButton href={pathForAdminPhotoEdit(photo)} />
+                    {/* Render form with confirm for syncing photo EXIF data */}
                     <FormWithConfirm
                       action={syncPhotoExifDataAction}
                       confirmText={
@@ -127,6 +145,7 @@ export default async function AdminPhotosPage({
                         `}
                       />
                     </FormWithConfirm>
+                    {/* Render form with confirm for deleting the photo */}
                     <FormWithConfirm
                       action={deletePhotoFormAction}
                       confirmText={deleteConfirmationTextForPhoto(photo)}
@@ -138,6 +157,7 @@ export default async function AdminPhotosPage({
                   </div>
                 </Fragment>)}
             </AdminGrid>
+            {/* Render "Show more photos" button if more photos are available */}
             {showMorePhotos &&
               <MorePhotos path={pathForAdminPhotos(offset + 1)} />}
           </div>

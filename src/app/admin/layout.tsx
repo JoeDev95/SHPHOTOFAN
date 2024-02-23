@@ -10,11 +10,16 @@ import {
   PATH_ADMIN_UPLOADS,
 } from '@/site/paths';
 
+/**
+ * AdminLayout component for the admin dashboard
+ * @param children - ReactNode for the content to be rendered within the layout
+ */
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  // Fetch counts for photos, uploads, and tags in parallel
   const [
     countPhotos,
     countUploads,
@@ -30,8 +35,9 @@ export default async function AdminLayout({
     getUniqueTagsCached().then(tags => tags.length),
   ]);
 
+  // Define navigation items with label, href, and count
   const navItemPhotos = {
-    label: 'Photos',
+    label: 'Fotos',
     href: PATH_ADMIN_PHOTOS,
     count: countPhotos,
   };
@@ -48,11 +54,14 @@ export default async function AdminLayout({
     count: countTags,
   };
 
+  // Initialize navigation items array with photos item
   const navItems = [navItemPhotos];
 
+  // Add uploads and tags items to navigation if count is greater than 0
   if (countUploads > 0) { navItems.push(navItemUploads); }
   if (countTags > 0) { navItems.push(navItemTags); }
 
+  // Render AdminNav component and children within a div
   return (
     <div className="mt-4 space-y-5">
       <AdminNav items={navItems} />

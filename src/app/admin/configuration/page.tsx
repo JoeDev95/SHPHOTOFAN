@@ -5,6 +5,11 @@ import { syncCacheAction } from '@/photo/actions';
 import SiteChecklist from '@/site/SiteChecklist';
 import { BiTrash } from 'react-icons/bi';
 
+/**
+ * Renders the Admin Configuration Page.
+ * This page displays configuration settings.
+ * @returns {JSX.Element} The rendered Admin Configuration Page.
+ */
 export default async function AdminConfigurationPage() {
   return (
     <SiteGrid
@@ -12,7 +17,7 @@ export default async function AdminConfigurationPage() {
         <div className="space-y-6">
           <div className="flex items-center">
             <div className="flex-grow">
-              Blog Configuration
+                   Configurações
             </div>
             <form action={syncCacheAction}>
               <SubmitButtonWithStatus

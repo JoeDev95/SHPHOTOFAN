@@ -3,6 +3,11 @@ import { getPhotoNoStore, getUniqueTagsCached } from '@/photo/cache';
 import { PATH_ADMIN } from '@/site/paths';
 import PhotoEditPageClient from '@/photo/PhotoEditPageClient';
 
+/**
+ * Function that renders the photo edit page.
+ * @param photoId - The ID of the photo to edit.
+ * @returns JSX element representing the photo edit page.
+ */
 export default async function PhotoEditPage({
   params: { photoId },
 }: {
