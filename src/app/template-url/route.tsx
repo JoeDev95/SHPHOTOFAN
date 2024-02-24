@@ -34,5 +34,10 @@ export function GET() {
     { type: 'blob' },
   ]));
 
-  return NextResponse.json(url.toString());
+  // TODO: Return the URL as a JSON response
+  return new Response(JSON.stringify(url), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 }
