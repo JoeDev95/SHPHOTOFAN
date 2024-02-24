@@ -28,38 +28,28 @@ export default async function AdminLayout({
     getPhotosCountIncludingHiddenCached(),
     getStorageUploadUrlsNoStore()
       .then(urls => urls.length)
-      .catch(e => {
-        console.error(`Error getting blob upload urls: ${e}`);
-        return 0;
-      }),
+      .catch(() => 0),
     getUniqueTagsCached().then(tags => tags.length),
   ]);
 
   // Define navigation items with label, href, and count
-  const navItemPhotos = {
-    label: 'Fotos',
-    href: PATH_ADMIN_PHOTOS,
-    count: countPhotos,
-  };
-
-  const navItemUploads = {
-    label: 'Uploads',
-    href: PATH_ADMIN_UPLOADS,
-    count: countUploads,
-  };
-
-  const navItemTags = {
-    label: 'Tags',
-    href: PATH_ADMIN_TAGS,
-    count: countTags,
-  };
-
-  // Initialize navigation items array with photos item
-  const navItems = [navItemPhotos];
-
-  // Add uploads and tags items to navigation if count is greater than 0
-  if (countUploads > 0) { navItems.push(navItemUploads); }
-  if (countTags > 0) { navItems.push(navItemTags); }
+  const navItems = [
+    {
+      label: 'Fotos',
+      href: PATH_ADMIN_PHOTOS,
+      count: countPhotos,
+    },
+    {
+      label: 'Uploads',
+      href: PATH_ADMIN_UPLOADS,
+      count: countUploads,
+    },
+    {
+      label: 'Tags',
+      href: PATH_ADMIN_TAGS,
+      count: countTags,
+    },
+  ].filter(item => item.count > 0);
 
   // Render AdminNav component and children within a div
   return (
